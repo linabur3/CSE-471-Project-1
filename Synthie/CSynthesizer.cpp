@@ -32,6 +32,8 @@ void CSynthesizer::Start(void)
 
     manager = new CSampleManager();
     rack = new CEffectsRack();
+    rack->setSampleRate(GetSampleRate());
+    rack->Setup();
 }
 
 //! Generate one audio frame

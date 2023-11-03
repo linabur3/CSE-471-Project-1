@@ -136,6 +136,7 @@
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEffectsRack.cpp" />
     <ClCompile Include="CInstrument.cpp" />
+    <ClCompile Include="CNoiseGate.cpp" />
     <ClCompile Include="CNote.cpp" />
     <ClCompile Include="CPiano.cpp" />
     <ClCompile Include="CSampleManager.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEffectsRack.h" />
     <ClInclude Include="CInstrument.h" />
+    <ClInclude Include="CNoiseGate.h" />
     <ClInclude Include="CNote.h" />
     <ClInclude Include="CPiano.h" />
     <ClInclude Include="CSampleManager.h" />
