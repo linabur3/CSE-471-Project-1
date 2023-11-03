@@ -102,7 +102,7 @@ bool CCompressor::Start()
 {
 	// Set initial params
 	m_time = 0;
-	threshold = 5000;
+	threshold = 1000;
 	mState = Bypass;
 	mSamplePeriod = 1 / mSampleRate;
 	mAttack = .05;

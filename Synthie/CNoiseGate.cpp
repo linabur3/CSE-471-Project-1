@@ -13,12 +13,12 @@ CNoiseGate::CNoiseGate()
 bool CNoiseGate::Start()
 {
 	// Set initial params
-	threshold = 10000;
+	threshold = 8000;
 	mState = Bypass;
 	m_time = 0;
 	mSamplePeriod = 1 / mSampleRate;
 	mAttack = .05;
-	mRelease = .05;
+	mRelease = .1;
 	return true;
 }
 
@@ -38,6 +38,9 @@ void CNoiseGate::ProcessAudio(double* audio)
 
 		// If we are attacking
 	case Attack:
+		// Ramp out
+		audio[0] = audio[0] * fabs((m_time - mAttackStart - mAttack)) / mAttack;
+		audio[1] = audio[0];
 
 		if ((m_time - mAttackStart) > mAttack)
 		{
@@ -45,10 +48,6 @@ void CNoiseGate::ProcessAudio(double* audio)
 			mState = Active;
 			mAttackStart = 0;
 		}
-
-		// Ramp out
-		audio[0] = audio[0] * fabs((m_time - mAttackStart - mAttack)) / mAttack;
-		audio[1] = audio[0];
 		break;
 
 		// Noise gate is on
@@ -67,20 +66,17 @@ void CNoiseGate::ProcessAudio(double* audio)
 
 		// We are releasing to go back to full gain
 	case Release:
+		// Ramp back in
+		audio[0] = audio[0] * (m_time - mReleaseStart) / mRelease;
+		audio[1] = audio[0];
+		
 		if ((m_time - mReleaseStart) > mRelease)
 		{
 			// Once release ends, go back to bypass mode
 			mState = Bypass;
 			mReleaseStart = 0;
 		}
-
-		// Ramp back in
-		audio[0] = audio[0] * (m_time - mReleaseStart) / mRelease;
-		audio[1] = audio[0];
 		break;
-
-
-	
 	}
 
 	// Add time elapsed
