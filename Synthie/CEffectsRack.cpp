@@ -2,6 +2,7 @@
 #include "CEffectsRack.h"
 #include "CCompressor.h"
 #include "CNoiseGate.h"
+#include "CFlanger.h"
 
 CEffectsRack::CEffectsRack()
 {
@@ -18,6 +19,11 @@ void CEffectsRack::Setup()
 	CEffect* gate = new CNoiseGate();
 	gate->setSampleRate(mSampleRate);
 	effects.push_back(gate);
+
+	// Create Flanger and add to signal chain
+	CEffect* flanger = new CFlanger();
+	flanger->setSampleRate(mSampleRate);
+	effects.push_back(flanger);
 
 	// Start all of the components
 	for (int i = 0; i < effects.size(); i++)
