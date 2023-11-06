@@ -24,3 +24,7 @@ unity gain gradually.
 
 CNoiseGate
 CNoiseGate has an attack, release and threshold setting. It is set to an attack and release of .05 and a threshold of 8000. The noise gate will allow any audio above the threshold to pass through and any audio below the threshold will be reduced to 0. The attack period the audio is slowly fading down from unity gain to zero and the release period the audio is gradually fading back in to unity gain from 0. A state machine is used to keep track of the current status of the noise gate. Bypass if the audio is above the threshold, attack if we have gone under the threshold but the attack period is not reached, active means we are actively reducing the gain to 0 and release we have gone back above the threshold and need to fade the audio back in.
+
+For the Piano synthesizer I did the first 30 points plays piano notes, envelope generation and pedal simulation.
+
+For the effects component i did the first 30 points, component passes audio, 1 effect and 3 effects.
