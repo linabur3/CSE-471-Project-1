@@ -43,6 +43,8 @@ public:
 
 	void XmlLoadNote(IXMLDOMNode* xml, std::wstring& instrument);
 
+	void setManager(CSampleManager* newmanager) { manager = newmanager; }
+
 private:
 	int		m_channels;
 	double	m_sampleRate;

@@ -23,22 +23,22 @@ bool CFlanger::Start()
 	xqueue.resize(QUEUESIZE);
 	yqueue.resize(QUEUESIZE);
 	m_resonf = .2;
-	m_resonB = .01;
-	mRateFactor = 10;
+	m_resonB = .1;
+	mRateFactor = 5;
 	return true;
 }
 
 void CFlanger::ProcessAudio(double* audio)
 {
 	// Flange audio
-	m_resonf =  .2 + (.15 * sin(mRateFactor * m_time));
+	m_resonf =  .3 + (.4 * sin(mRateFactor * m_time));
 
 	// Calculate values for Reson Filter
 	double R = 1 - (m_resonB / 2);
 	double cos_theta = (2 * R * cos(2 * pi * m_resonf)) / (1 + (R * R));
 	double A = (1 - (R * R)) * sqrt((1 - (cos_theta * cos_theta)));
 
-	A = A * 8;
+	A = A * 2;
 
 	wrloc = (wrloc + 2) % QUEUESIZE;
 	xqueue[wrloc] = audio[0];

@@ -54,6 +54,7 @@ private:
 
 	int NumChannels() {return 2;}
 	double SampleRate() {return 44100;}
+
 public:
 	afx_msg void OnGenerateFileoutput();
 	afx_msg void OnUpdateGenerateFileoutput(CCmdUI *pCmdUI);

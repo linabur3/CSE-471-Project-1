@@ -1,0 +1,26 @@
+Title for selection - Secret of the Forest - Cover (Music from Chrono Trigger)
+Group members - Cale Linabury
+Format for score files - .score
+Score files - SOTF (Chrono Trigger).score is main piece, shortsong.score was used for effects demos
+
+Piano Synthesis component description
+The piano synthesis is made of 2 main parts - CPiano and CSampleManager. CSampleManager loads all of the samples from the "CompletePiano" for CPiano to sample. CSampleManager loads each individual note, maps each note to
+its cooresponding position in the vector for retrival from CPiano. CPiano is derived from CInstrument. CPiano loads the notes from the score file and then requests the sample it needs from CSampleManager for the given note.
+The envelope has a "ramp out" period to avoid clicking as the sound cuts out. It is set to .05 seconds initially. The pedal simulation is handled by an XML attribute "pedal". If it is 1 the pedal is on, if it is not the pedal is off. This causes the note to sustain longer and fade out over a longer period of time. The pedal status is handled by CSampleManager as it is a global attribute for every note that is currently being played by the piano. One
+instance of the CSampleManager is kept by CSynthesizer in the program.
+
+Effects system description
+The system components are CEffectsRack, which has a collection of CEffect objects. CEffect is an abstract class that describes a single effect. There are 3 derived classes from CEffect, CNoiseGate, CCompressor and CFlanger.
+CSynthesizer keeps a pointer to a CEffectsRack object, and calls the ProcessAudio function which in turn allows all of the individual effects to take the current audio frame and apply processing to it.
+
+CFlanger
+CFlanger uses the Reson filter developed in Step 4 to create a flanger effect. It has a bandwidth of .1 and uses a sine function to sweep this filter across the frequency spectrum to produce the effect.
+
+CCompressor
+CCompressor features a control for attack, release, threshold and ratio. It is set to an attack of .05, a release of .2 and a ratio of 4 to 1. The knee is set to .5. The compressor will duck the audio based on the level or gain of the 
+input signal. When the audio goes over the threshold, it will reduce the gain by an amount equal to 1/ratio multiplied by the amount of gain over the threshold. So for every 4 units that come in over the threshold, they will be
+reduced to 1. The attack period lets the audio through with no gain reduction, then goes to Knee mode where the audio is reduced gradually, then into full gain reduction mode, then the release the audio is brought back up to
+unity gain gradually.
+
+CNoiseGate
+CNoiseGate has an attack, release and threshold setting. It is set to an attack and release of .05 and a threshold of 8000. The noise gate will allow any audio above the threshold to pass through and any audio below the threshold will be reduced to 0. The attack period the audio is slowly fading down from unity gain to zero and the release period the audio is gradually fading back in to unity gain from 0. A state machine is used to keep track of the current status of the noise gate. Bypass if the audio is above the threshold, attack if we have gone under the threshold but the attack period is not reached, active means we are actively reducing the gain to 0 and release we have gone back above the threshold and need to fade the audio back in.

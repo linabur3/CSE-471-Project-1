@@ -102,12 +102,12 @@ bool CCompressor::Start()
 {
 	// Set initial params
 	m_time = 0;
-	threshold = 1000;
+	threshold = 800;
 	mState = Bypass;
 	mSamplePeriod = 1 / mSampleRate;
 	mAttack = .05;
 	mRelease = .2;
-	mRatio = 4;
+	mRatio = 6;
 	knee = .5;
 	return true;
 }
